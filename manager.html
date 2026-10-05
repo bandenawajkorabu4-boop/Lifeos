@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manager Dashboard</title>
+
+</head>
+
+<body>
+
+    <h1>Manager Dashboard</h1>
+
+    <h2>Customer Bookings</h2>
+
+    <button onclick="loadBookings()">
+        Refresh Bookings
+    </button>
+
+    <br><br>
+
+    <table border="1">
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Room</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Guests</th>
+                <th>Booking Date</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="bookingTable">
+
+        </tbody>
+
+    </table>
+
+
+    <script>
+
+        async function loadBookings() {
+
+            const response =
+                await fetch("/api/bookings");
+
+            const bookings =
+                await response.json();
+
+            const table =
+                document.getElementById("bookingTable");
+
+            table.innerHTML = "";
+
+
+            bookings.forEach(function(booking) {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+
+                    <td>${booking.id}</td>
+
+                    <td>${booking.name}</td>
+
+                    <td>${booking.phone}</td>
+
+                    <td>${booking.email}</td>
+
+                    <td>${booking.room}</td>
+
+                    <td>${booking.checkin}</td>
+
+                    <td>${booking.checkout}</td>
+
+                    <td>${booking.guests}</td>
+
+                    <td>${booking.booking_date}</td>
+
+                `;
+
+                table.appendChild(row);
+
+            });
+
+        }
+
+
+        loadBookings();
+
+    </script>
+
+</body>
+
+</html>
